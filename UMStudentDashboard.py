@@ -61,10 +61,10 @@ def input_grades(classes, student_id, name, school_year):
         student_data["Student ID"].append(student_id)
         student_data["Name"].append(name)
         student_data["Class"].append(class_name)
-        student_data["Quarter 1"].append(grades[0])
-        student_data["Quarter 2"].append(grades[1])
-        student_data["Quarter 3"].append(grades[2])
-        student_data["Quarter 4"].append(grades[3])
+        student_data["Q1"].append(grades[0])
+        student_data["Q2"].append(grades[1])
+        student_data["Q3"].append(grades[2])
+        student_data["Q4"].append(grades[3])
     return student_data
 
 #A function to start creating data visualizations
