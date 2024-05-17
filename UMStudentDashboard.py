@@ -71,3 +71,31 @@ def input_grades(classes, student_id, name, school_year):
 def create_dataframe(student_data):
     return pd.DataFrame(student_data)
 
+
+def boxplot(df):
+    df_melted = df.melt(id_vars=["School Year", "Student ID", "Name", "Class"], 
+                        value_vars=["Q1", "Q2", "Q3", "Q4"], 
+                        var_name="Quarter", value_name="Grade")
+    df_melted.boxplot(by='Quarter', column='Grade', grid=True)
+    plt.title("Grade-Distribution by Quarter")
+    plt.suptitle('')
+    plt.xlabel('Quarter')
+    plt.ylabel('Grade')
+    plt.show()
+
+def indvidual_class_performance_line(df, classes):
+    for class_name in classes:
+        class_df = df[df['Class'] == class_name]
+        class_df.set_index('Class')[["Q1","Q2","Q3","Q4"]].T.plot()
+        plt.title(f"Performance in {class_name} over Quarters")
+        plt.xlabel("Quarter")
+        plt.ylabel("Grade")
+        plt.legend([class_name])
+        plt.show()
+
+def display_summary(df):
+    df['Average'] = df[["Q1","Q2","Q3","Q4"]].mean(axis=1)
+    print("\nSummary Statistics:")
+    print(f"Overall Average Grade: {df['Average'].mean()}")
+    print(f"Highest Grade: {df[["Q1","Q2","Q3","Q4"]].max().max()}")
+    print(f"Lower Grade: {df[["Q1","Q2","Q3","Q4"]].min().min()}")
