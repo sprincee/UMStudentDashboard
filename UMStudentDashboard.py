@@ -33,4 +33,41 @@ def input_classes():
             return classes
         except ValueError as e:
             print(f"Invalid input: {e}. Please enter the classes again.")
-            
+
+
+#A function to input grades -- taking parameters like classes, student_id, name, and school_year
+def input_grades(classes, student_id, name, school_year):
+    student_data = {
+        "School Year": [],
+        "Student ID": [],
+        "Name": [],
+        "Class": [],
+        "Q1": [],
+        "Q2": [],
+        "Q3": [],
+        "Q4": []
+    }
+    for class_name in classes:
+        while True:
+            try:
+                grades = input(f"Enter grades for {class_name} (4 quarters, sep. by commas): ")
+                grades = [float(grade.strip()) for grade in grades.split(',')]
+                if len(grades) != 4:
+                    raise ValueError("Please enter exactly 4 grades.")
+                break
+            except ValueError as e:
+                print(f"Invalid input: {e}. Please enter the grades again.")
+        student_data["School Year"].append(school_year)
+        student_data["Student ID"].append(student_id)
+        student_data["Name"].append(name)
+        student_data["Class"].append(class_name)
+        student_data["Quarter 1"].append(grades[0])
+        student_data["Quarter 2"].append(grades[1])
+        student_data["Quarter 3"].append(grades[2])
+        student_data["Quarter 4"].append(grades[3])
+    return student_data
+
+#A function to start creating data visualizations
+def create_dataframe(student_data):
+    return pd.DataFrame(student_data)
+
