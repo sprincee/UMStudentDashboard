@@ -1,27 +1,53 @@
 
 #Final-Project aka UMStudentDashboard
 
-#UMStudentDashboard
-
 #Imports
 import pandas as pd
 import matplotlib.pyplot as plt
 
 
-#A function to collect school year
+
 def input_school_year():
+    '''
+A function to collect the school year.
+
+Arguments:
+    - None.
+
+Returns:
+    - str: School year entered by the user.
+
+    '''
     return input("Enter School Year (YYYY-YYYY): ")
 
 
-#A function to collect basic student data
+
 def input_student_data():
+    '''
+A function to collect basic student data.
+
+Arguements:
+    - None.
+
+Returns:
+    - tuple: Tuple containing the user's student-ID and name as entered. 
+    '''
     student_id = input("Enter Student ID: ")
     name = input("Enter Student Name: ")
     return student_id, name
 
 
-#A function to input classes into a list
 def input_classes():
+    '''
+A function to input classes into a list.
+
+Arguements:
+    - None.
+
+Returns:
+    - list: List containing user's classes as entered.
+
+    '''
     while True:
         try:
             class_list = input("Enter Classes (seperated by commas, or 'done' to finish): ")
@@ -36,8 +62,20 @@ def input_classes():
             
 
 
-#A function to input grades -- taking parameters like classes, student_id, name, and school_year
 def input_grades(classes, student_id, name, school_year):
+    '''
+A function to input grades for each class.
+
+Arguements:
+    - classes (list): List of classes.
+    - student_id (str): Student ID.
+    - name (str): Student name.
+    - school_year (str): School year.   
+
+Returns:
+    - dict: Dictionary containing user/student data including grades as entered.
+
+    '''
     student_data = {
         "School Year": [],
         "Student ID": [],
@@ -70,10 +108,30 @@ def input_grades(classes, student_id, name, school_year):
 
 #A function to start creating data visualizations
 def create_dataframe(student_data):
+    '''
+A function to begin the data visualizations
+
+Arguements:
+    - student_data (dict): Dictionary containing student/user data.
+
+Returns:
+    - DataFrame: Pandas data-frame containing student/user data as entered.
+
+    '''
     return pd.DataFrame(student_data)
 
 
 def boxplot(df):
+    '''
+A function to plot grade distros. by quarter using boxplot.
+
+Arguements:
+    - df (DataFrame): Pandas data-frame containing student/user data as entered.
+
+Returns:
+    - None.
+
+    '''
     df_melted = df.melt(id_vars=["School Year", "Student ID", "Name", "Class"], 
                         value_vars=["Q1", "Q2", "Q3", "Q4"], 
                         var_name="Quarter", value_name="Grade")
@@ -85,6 +143,17 @@ def boxplot(df):
     plt.show()
 
 def indvidual_class_performance_line(df, classes):
+    '''
+A function to plot individual class performance over time using line plots.
+
+Arguements:
+    - df (DataFrame): Pandas data-frame containing student/user data as entered.
+    - classes (list): List of classes.
+
+Returns:
+    - None.
+
+    '''
     for class_name in classes:
         class_df = df[df['Class'] == class_name]
         class_df.set_index('Class')[["Q1","Q2","Q3","Q4"]].T.plot()
@@ -95,6 +164,16 @@ def indvidual_class_performance_line(df, classes):
         plt.show()
 
 def display_summary(df):
+    '''
+A function to display summary statistics.
+
+Arguements:
+    - df (DataFrame): Pandas data-frame containing student/user data as entered.
+
+Returns:
+    - None.
+
+    '''
     df['Average'] = df[["Q1","Q2","Q3","Q4"]].mean(axis=1)
     print("\nSummary Statistics:")
     print(f"Overall Average Grade: {df['Average'].mean()}")
@@ -102,6 +181,16 @@ def display_summary(df):
     print(f"Lower Grade: {df[['Q1','Q2','Q3','Q4']].min().min()}")
 
 def main():
+    '''
+The main function of the program.
+
+Arguements:
+    - None.
+
+Returns:
+    - None.
+
+    '''
     school_year = input_school_year()
     student_id, name = input_student_data()
     classes = input_classes()
@@ -131,3 +220,6 @@ def main():
 
 #Function Caller
 main()
+
+
+#PROJECT by MAHAD KHAN from KHAN STUDIOS
