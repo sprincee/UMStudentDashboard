@@ -20,7 +20,7 @@ def input_student_data():
     return student_id, name
 
 
-#A function to input classes
+#A function to input classes into a list
 def input_classes():
     while True:
         try:
@@ -33,6 +33,7 @@ def input_classes():
             return classes
         except ValueError as e:
             print(f"Invalid input: {e}. Please enter the classes again.")
+            
 
 
 #A function to input grades -- taking parameters like classes, student_id, name, and school_year
@@ -97,5 +98,36 @@ def display_summary(df):
     df['Average'] = df[["Q1","Q2","Q3","Q4"]].mean(axis=1)
     print("\nSummary Statistics:")
     print(f"Overall Average Grade: {df['Average'].mean()}")
-    print(f"Highest Grade: {df[["Q1","Q2","Q3","Q4"]].max().max()}")
-    print(f"Lower Grade: {df[["Q1","Q2","Q3","Q4"]].min().min()}")
+    print(f"Highest Grade: {df[['Q1','Q2','Q3','Q4']].max().max()}")
+    print(f"Lower Grade: {df[['Q1','Q2','Q3','Q4']].min().min()}")
+
+def main():
+    school_year = input_school_year()
+    student_id, name = input_student_data()
+    classes = input_classes()
+    student_data = input_grades(classes, student_id, name, school_year)
+
+    df = create_dataframe(student_data)
+
+    while True:
+        print("\nWhat information would you like to see?")
+        print("1. Grade Box Plot by Quarter")
+        print("2. Individual Class Performance Over Time")
+        print("3. Summary Statistics")
+        print("4. EXIT!")
+        user_choice = input("Enter choice (1-4): ")
+
+        if user_choice == '1':
+            boxplot(df)
+        elif user_choice == '2':
+            indvidual_class_performance_line(df, classes)
+        elif user_choice == '3':
+            display_summary(df)
+        elif user_choice == '4':
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+#Function Caller
+main()
